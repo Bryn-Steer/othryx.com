@@ -1132,6 +1132,48 @@
         $(this).addClass('pricing-card_active');
     });
 
+    // ==============================
+    // Scroll-driven Progress Bar
+    // ==============================
+    document.addEventListener('DOMContentLoaded', () => {
+        const section    = document.getElementById('journeySection');
+        const progress   = section.querySelector('.progress');
+        const circles    = Array.from(section.querySelectorAll('.circle'));
+        const first      = circles[0];
+        const last       = circles[circles.length - 1];
+      
+        function updateTimeline() {
+          // 1) compute absolute document offsets for the first & last circles
+          const firstOffset = first.getBoundingClientRect().top + window.scrollY;
+          const lastOffset  = last.getBoundingClientRect().top  + window.scrollY;
+      
+          // 2) compute where the user’s viewport is, via its midpoint
+          const scrollMid   = window.scrollY + window.innerHeight / 2;
+      
+          // 3) turn that into a 0–1 fraction between first and last
+          let pct = (scrollMid - firstOffset) / (lastOffset - firstOffset);
+          pct = Math.min(Math.max(pct, 0), 1);
+      
+          // 4) apply it to the bar
+          progress.style.height = (pct * 100) + '%';
+      
+          // 5) toggle sticky class only while between the circles
+          if (pct > 0 && pct < 1) progress.classList.add('sticky');
+          else                   progress.classList.remove('sticky');
+      
+          // 6) activate each circle once pct passes its position
+          circles.forEach(circle => {
+            const circlePos = parseFloat(circle.style.top) / 100;
+            circle.classList.toggle('active', pct >= circlePos);
+          });
+        }
+      
+        window.addEventListener('scroll', updateTimeline, { passive: true });
+        window.addEventListener('resize', updateTimeline);
+        updateTimeline();
+      });
+      
+  
 
     /*--------------------------------------------------
         select onput

@@ -6816,8 +6816,8 @@ li.trackback {
   margin-top: 53px;
 }
 
-/* Medium Large devices */
-@media (max-width: 1399px) {
+/* Large devices */
+@media (max-width: 1599px) {
   .hero-style1 {
     padding: 150px 0 215px;
   }
@@ -14736,3 +14736,120 @@ span.select2-selection.select2-selection--single:focus {
   color: var(--body-color);
   line-height: 1.7;
 }
+
+/* =============================
+Customer Journey Timeline Styles
+================================ */
+
+/* Section container */
+#journeySection {
+  position: relative;       /* bounding context for absolute children */
+  width: 100%;
+  padding: 100px 10%;       /* top/bottom and left/right whitespace */
+}
+
+/* Steps wrapper */
+.steps {
+  position: static;
+  z-index: 1;
+  max-width: 1000px;        /* constrain overall width */
+  margin: 0 auto;           /* center within padded area */
+  display: flex;
+  flex-direction: column;
+  gap: 200px;               /* vertical gap between each step */
+}
+
+/* Individual step */
+.step {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Step text column */
+.step .content {
+  flex: 0 0 45%;
+  padding-right: 5%;
+}
+.step .content h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+.step .content p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+/* Step image column */
+.step .image {
+  flex: 0 0 45%;
+  padding-left: 5%;
+  text-align: right;
+}
+.step .image img {
+  max-width: 80%;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* ===========
+   Timeline Bar
+   =========== */
+/* Static bar spanning full section height, centered */
+.timeline {
+  position: absolute;
+  top: 10;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 80%;            /* span the entire height of #journeySection */
+}
+
+/* Faint background line */
+.timeline .line {
+  position: absolute;
+  top: -30; left: 0;
+  width: 100%; height: -60%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Scroll-driven green fill */
+.timeline .progress {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 0;               /* will be set by JS */
+  background: #6cc45e;
+  transition: height 0.1s ease-out;
+}
+
+/* Key-event circles, one per step */
+.timeline .circle {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(108, 196, 94, 0.5);
+  transition: background 0.3s, transform 0.3s;
+}
+
+/* Manually line up circles with each step */
+/* Tweak these percentages to match your actual step positions */
+.timeline .circle[data-step="1"] { top: 0%; }
+.timeline .circle[data-step="2"] { top: 25%; }
+.timeline .circle[data-step="3"] { top: 50%; }
+.timeline .circle[data-step="4"] { top: 75%; }
+.timeline .circle[data-step="5"] { top: 100%; }
+
+/* Active state when step is reached */
+.timeline .circle.active {
+  background: #6cc45e;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+
+  
